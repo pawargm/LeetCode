@@ -110,7 +110,7 @@ public:
     }
 
 
-      double findMedianSortedArrays(vector<int> nums1, vector<int> nums2) {
+      double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         
         int sizeNum1 = nums1.size();
         int sizeNum2 = nums2.size();
@@ -119,6 +119,7 @@ public:
         int halfNumLessOne = 0;
         int indexNum1 = 0;
         int indexNum2 = 0;
+		int cnt = -1;
         
         
         if(sizeNum1 == 0 && sizeNum2 == 0) {
@@ -137,7 +138,7 @@ public:
         if(sizeNum2 == 0) {
             
             if(sizeNum1%2 == 0) {
-                return (nums1[sizeNum1/2] + nums1[sizeNum1/2]-1)/2;
+                return (double) (nums1[sizeNum1/2] + nums1[sizeNum1/2]-1)/2;
             }
             else {
                 return nums1[sizeNum1/2];
@@ -145,36 +146,39 @@ public:
         }
         
         while(halfNum == 0) {
-            
-            if (nums1[indexNum1] <= nums2[indexNum2]) {
-                indexNum1++;
+
+			int num = 0;
+			if(indexNum1<sizeNum1 && indexNum2 <sizeNum2) {
+            	if (nums1[indexNum1] <= nums2[indexNum2]) {
+                	num = nums1[indexNum1];
+					indexNum1++;
+            	}
+            	else {
+					num = nums2[indexNum2];
+                	indexNum2++;
+            	}
+			}
+			else {
+				if( indexNum1 == sizeNum1 && indexNum2 < sizeNum2) {
+					num = nums2[indexNum2];
+					indexNum2++;
+				}
+				if( indexNum2 == sizeNum2 && indexNum1 < sizeNum1) {
+					num = nums1[indexNum1];
+					indexNum1++;
+				}
+			}
+            cnt++;
+            if (cnt == ((totalSize/2)-1) ) {
+				halfNumLessOne = num;
             }
-            else {
-                indexNum2++;
-            }
-            
-            if ((indexNum1 + indexNum2) == ((totalSize/2)-1) ) {
-                
-                if (nums1[indexNum1] <= nums2[indexNum2]) {
-                      halfNumLessOne = nums1[indexNum1]; 
-                }
-                else {
-                      halfNumLessOne = nums2[indexNum2];  
-                }
-            }
-            if ((indexNum1 + indexNum2) == (totalSize/2)) {
-                
-                if (nums1[indexNum1] <= nums2[indexNum2]) {
-                      halfNum = nums1[indexNum1]; 
-                }
-                else {
-                      halfNum = nums2[indexNum2];  
-                }
-            }   
+            if (cnt == (totalSize/2)) {
+				halfNum = num;
+           }   
         }
         
         if(totalSize%2 == 0) {
-            return (halfNum+halfNumLessOne)/2; 
+            return (double)(halfNum+halfNumLessOne)/2; 
         }
         return halfNum;   
     }
@@ -278,7 +282,7 @@ int main() {
 
   //int res = sobj.search(vec, 0);
   //cout<<"Result is : "<<res<<endl;
-  int tmp = sobj.findMedianSortedArrays(vec, vec1);
+  double tmp = sobj.findMedianSortedArrays(vec, vec1);
   cout<<"Max Profit: "<<tmp<<endl;
 	return 0;
 }
