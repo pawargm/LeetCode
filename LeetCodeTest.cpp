@@ -180,6 +180,77 @@ public:
     }
 
 
+    bool canJump(vector<int>& nums) {
+        
+        int i;
+        
+        if(nums.size()==0)
+            return false;
+        
+        if(nums[0]==0 && nums.size()==1)
+            return true;
+        if(nums[0]==0 && nums.size()>1)
+            return false;
+        
+        for(i=0; i<nums.size(); i++) {
+            
+            if(nums[i]==0)
+                break;
+        }
+        
+        if(i==nums.size())
+            return true;
+        
+        vector<int> indexVec(nums.size(),0);
+        
+        indexVec[0] = 1;
+        
+        for(i=0; i<nums.size(); i++)
+        {
+            if(i==0) {
+                
+               
+                if (i+nums[i] >= nums.size()) {
+                    for(int j=i+1;j<nums.size(); j++) {
+                        indexVec[j] = 1;
+                    }
+                }
+                else {
+                    for(int j=i+1;j<=i+nums[i]; j++) {
+                    indexVec[j] = 1;
+                    }
+                }
+            }
+            else {
+                
+                if(nums[i]>=nums[i-1]) {
+                    
+                    
+                     if (i+nums[i] > nums.size()) {
+                         for(int j=i+1;j<nums.size(); j++) {
+                             indexVec[j] =1;
+                         }
+                     }
+                     else {
+                        for(int j=i+1;j<=i+nums[i]; j++) {
+                             indexVec[j] = 1;
+                        }
+                     }
+                }
+                
+            }
+        }
+        
+        for( i=0; i<indexVec.size(); i++) {
+            if(indexVec[i] == 0)
+                break;
+        }
+        if(i != indexVec.size()) {
+            return false;
+        }
+        return true;
+    }
+
 
 
     
