@@ -273,8 +273,9 @@ public:
             bottom = dfsArray(grid, row+1, col, vis);
             back = dfsArray(grid, row, col-1, vis);
             front = dfsArray(grid, row, col+1, vis);
+			return top + bottom + back + front + 1
         }
-        return top + bottom + back + front + 1;
+        return 0;
     }
     
     int maxAreaOfIsland(vector<vector<int>>& grid) {
@@ -283,7 +284,7 @@ public:
             return 0;
         
         vector<vector<int>> vis(grid.size(),vector<int>(grid[0].size(),0));
-        int maxCnt = INT_MIN;
+        int maxCnt = 0;
         
         for(int i=0; i<grid.size(); i++) {
             for(int j=0; j<grid[0].size(); j++) {
@@ -310,13 +311,15 @@ public:
         if (vis[row][col] == 1)
             return 0;
         
-        if (grid[row][col] == 1) {
+        if (grid[row][col] == '1') {
+
             vis[row][col] = 1;
-            dfsArray(grid, row-1, col, vis);
-            dfsArray(grid, row+1, col, vis);
-            dfsArray(grid, row, col-1, vis);
-            dfsArray(grid, row, col+1, vis);
+            clusterIsland(grid, row-1, col, vis);
+            clusterIsland(grid, row+1, col, vis);
+            clusterIsland(grid, row, col-1, vis);
+            clusterIsland(grid, row, col+1, vis);
         }
+		int tmp=0;
         return 0;
     }
     
@@ -351,12 +354,12 @@ int main() {
 	Solution sobj;
 
   //[4,5,6,7,0,1,2]
-  vector<int> vec;
+//  vector<int> vec;
   
-  vec.push_back(1);
-  vec.push_back(0);
-  vec.push_back(1);
-  vec.push_back(1);
+ // vec.push_back(1);
+ // vec.push_back(0);
+ // vec.push_back(1);
+ // vec.push_back(1);
   //vec.push_back(6);
   //vec.push_back(4);
   //vec.push_back(1);
@@ -368,7 +371,17 @@ int main() {
 
   //int res = sobj.search(vec, 0);
   //cout<<"Result is : "<<res<<endl;
-  bool tmp = sobj.canJump(vec);
-  cout<<"output: "<<tmp<<endl;
+  //bool tmp = sobj.canJump(vec);
+  //cout<<"output: "<<tmp<<endl;i
+
+	vector<vector<char>> grid {
+								{'1','1','1','1','0'},
+								{'1','1','0','1','0'},
+								{'1','1','0','0','0'},
+								{'0','0','0','0','0'}
+							};
+
+	int res = sobj.numIslands(grid);
+	cout<<"Max isLand: "<<res<<endl;
 	return 0;
 }
