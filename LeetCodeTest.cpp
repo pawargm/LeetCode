@@ -230,7 +230,7 @@ public:
                 if(nums[i]>=nums[i-1]) {
                     
                     
-                     if (i+nums[i] > nums.size()) {
+                     if (i+nums[i] >= nums.size()) {
                          for(int j=i+1;j<nums.size(); j++) {
                              indexVec[j] =1;
                          }
@@ -316,21 +316,21 @@ int main() {
   vector<int> vec;
   
   vec.push_back(1);
-  vec.push_back(2);
-  //vec.push_back(5);
-  //vec.push_back(3);
+  vec.push_back(0);
+  vec.push_back(1);
+  vec.push_back(1);
   //vec.push_back(6);
   //vec.push_back(4);
   //vec.push_back(1);
   //vec.push_back(1);
 
-  vector<int> vec1;
-  vec1.push_back(3);
-  vec1.push_back(4);
+  //vector<int> vec1;
+  //vec1.push_back(1);
+  //vec1.push_back(1);
 
   //int res = sobj.search(vec, 0);
   //cout<<"Result is : "<<res<<endl;
-  double tmp = sobj.findMedianSortedArrays(vec, vec1);
-  cout<<"Max Profit: "<<tmp<<endl;
+  bool tmp = sobj.canJump(vec);
+  cout<<"output: "<<tmp<<endl;
 	return 0;
 }
