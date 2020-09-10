@@ -302,7 +302,45 @@ public:
         
     }
 
+   int clusterIsland (vector<vector<char>>&grid, int row, int col, vector<vector<int>>&vis) {
 
+        if (row<0 || col<0 || row>grid.size()-1 || col>grid[0].size()-1)
+            return 0;
+        
+        if (vis[row][col] == 1)
+            return 0;
+        
+        if (grid[row][col] == 1) {
+            vis[row][col] = 1;
+            dfsArray(grid, row-1, col, vis);
+            dfsArray(grid, row+1, col, vis);
+            dfsArray(grid, row, col-1, vis);
+            dfsArray(grid, row, col+1, vis);
+        }
+        return 0;
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+    
+                
+        if(grid.size() == 0)
+            return 0;
+        
+        vector<vector<int>> vis(grid.size(),vector<int>(grid[0].size(),0));
+        int cntIsland = 0;
+        
+        for(int i=0; i<grid.size(); i++) {
+            for(int j=0; j<grid[0].size(); j++) {
+                             
+                if(grid[i][j] == '1' && vis[i][j] == 0) {
+                    clusterIsland(grid, i, j, vis);
+                    cntIsland++;
+                }
+            }
+        }
+        return cntIsland;
+        
+    }
 
 
     
