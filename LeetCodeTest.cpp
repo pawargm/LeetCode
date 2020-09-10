@@ -255,6 +255,54 @@ public:
         return true;
     }
 
+        int dfsArray (vector<vector<int>>&grid, int row, int col, vector<vector<int>>&vis) {
+        
+        int top = 0;
+        int front = 0;
+        int back = 0;
+        int bottom = 0;
+        if (row<0 || col<0 || row>grid.size() || col>grid[0].size())
+            return 0;
+        
+        if (vis[row][col] == 1)
+            return 0;
+        
+        if (grid[row][col] == 1) {
+            vis[row][col] = 1;
+            top = dfsArray(grid, row-1, col, vis);
+            bottom = dfsArray(grid, row+1, col, vis);
+            back = dfsArray(grid, row, col-1, vis);
+            front = dfsArray(grid, row, col+1, vis);
+        }
+        return top + bottom + back + front + 1;
+    }
+    
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        
+        if(grid.size() == 0)
+            return 0;
+        
+        vector<vector<int>> vis(grid.size(),vector<int>(grid[0].size(),0));
+        int maxCnt = INT_MIN;
+        
+        for(int i=0; i<grid.size(); i++) {
+            for(int j=0; j<grid[0].size(); j++) {
+                
+                int tmpMax = 0;         
+                if(grid[i][j] == 1) {
+                    tmpMax =  dfsArray(grid, i, j, vis);
+                }
+                if(tmpMax > maxCnt) {
+                    maxCnt = tmpMax;
+                }
+            }
+        }
+        
+        return maxCnt;
+        
+    }
+
+
 
 
     
