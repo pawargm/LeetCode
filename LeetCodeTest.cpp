@@ -343,6 +343,80 @@ public:
     }
 
 
+        public boolean dfsRetry(char[][] board, int row, int col, String word, int currCnt, int [][]visit) {
+        
+        
+        if(board[row][col] == word.charAt(currCnt) && (currCnt+1) == word.length())
+            return true;
+        if(board[row][col] != word.charAt(currCnt) && (currCnt+1) == word.length())
+            return false;
+        
+        int rowLen = board.length;
+        int colLen = board[0].length;
+
+        boolean upper, lower, left, right;
+        //upper
+        if( (row-1)>=0 && (board[row-1][col] == word.charAt(currCnt)) && visit[row-1][col] == 0) {
+            visit[row-1][col] = 1;
+            upper = dfsRetry(board, row-1, col, word, currCnt+1, visit);
+        } else {
+            upper = false;
+        }
+        //lower
+        if((row+1) < rowLen &&(board[row+1][col] == word.charAt(currCnt)) && visit[row+1][col] == 0 )  {
+            visit[row+1][col] = 1;
+            lower = dfsRetry(board, row+1, col, word, currCnt+1, visit);
+        } else {
+            lower = false;
+        }
+        //right
+        if((col+1) < colLen &&(board[row][col+1] == word.charAt(currCnt)) && visit[row][col+1] == 0 )  {
+            visit[row][col+1] = 1;
+            right = dfsRetry(board, row, col+1, word, currCnt+1, visit);
+        } else {
+            right = false;
+        }
+        //left
+        if((col-1) >=0 &&(board[row][col-1] == word.charAt(currCnt)) && visit[row][col-1] == 0 )  {
+            visit[row][col-1] = 1;
+            left = dfsRetry(board, row, col-1, word, currCnt+1, visit);   
+        } else {
+            left = false;
+        }
+        
+        boolean res = upper || lower || left || right;
+        
+        return res;
+    }
+    
+    
+    
+    
+    public boolean exist(char[][] board, String word) {
+        
+        
+        boolean res = false;
+        for(int i=0; i<board.length; i++) {
+            
+            for(int j=0; j<board[0].length; j++) {
+                
+                int [] []visit = new int[board.length][board[0].length];
+                
+                if(board[i][j] == word.charAt(0)) {
+                    visit[i][j] = 1;
+                    res = dfsRetry(board, i, j, word,0,visit);
+                }
+                if(res == true)
+                    break;
+            }
+            if(res == true)
+                break;
+        }
+        return res;
+    }
+
+
+
     
 };
 int main() {
